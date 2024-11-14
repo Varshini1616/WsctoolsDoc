@@ -1,0 +1,45 @@
+package com.WscMapController;
+
+import com.WscMapModel.Location;
+import com.WscMapService.LocationService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/locations")
+public class LocationController {
+
+    @Autowired
+    private LocationService locationService;
+
+    @PostMapping
+    public ResponseEntity<Location> addLocation(@RequestBody Location location) {
+        return ResponseEntity.ok(locationService.addLocation(location));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Location>> getAllLocations() {
+        return ResponseEntity.ok(locationService.getAllLocations());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Location> getLocationById(@PathVariable String id) {
+        Optional<Location> location = locationService.getLocationById(id);
+        return location.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Location> updateLocation(@PathVariable String id, @RequestBody Location updatedLocation) {
+        return ResponseEntity.ok(locationService.updateLocation(id, updatedLocation));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteLocation(@PathVariable String id) {
+        locationService.deleteLocation(id);
+        return ResponseEntity.ok("Location deleted successfully!");
+    }
+}

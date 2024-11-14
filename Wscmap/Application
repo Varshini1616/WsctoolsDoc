@@ -1,0 +1,15 @@
+package com.WscMap;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+
+@SpringBootApplication
+@ComponentScan(basePackages = {"com.WscMapModel", "com.WscMapController", "com.WscMapService", "com.WscMapHandler", "com.WscMapConfig"})
+@EnableMongoRepositories(basePackages = "com.WscMapRepository")
+public class WscMapApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(WscMapApplication.class, args);
+    }
+}
